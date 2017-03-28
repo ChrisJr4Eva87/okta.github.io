@@ -1001,6 +1001,30 @@ status code, see <a href="https://tools.ietf.org/html/rfc6585#section-4">section
 </code></pre>
 </div>
 
+<h5 id="create-group-post-groups">Create Group: POST /Groups</h5>
+
+<p>With Group Push Beta, Okta now supports creation of a Group along with its user memberships in the downstream SCIM enabled application if your SCIM 2.0 API supports it. The caveat is that the users must already be provisioned in your SCIM enabled application.</p>
+
+<h5 id="read-group-details-get-groupsid">Read Group Details: GET /Groups/{id}</h5>
+
+<p>With Group Push Beta, Okta now supports reading the Group’s details by group id along with the membership details. If a Group is not found, your SCIM application may return a HTTP status 404(“not found”).For more details on the <code class="highlighter-rouge">/Groups/{id}</code> SCIM endpoint, see <a href="https://tools.ietf.org/html/rfc7644#section-3.4.1">section 3.4.1</a> of the <a href="https://tools.ietf.org/html/rfc7644">SCIM 2.0 Protocol Specification</a>.</p>
+
+<h5 id="update-group-details-put-groupsid">Update Group Details: PUT /Groups/{id}</h5>
+
+<p>With Group Push Beta, any updates to the Group profile and memberships in Okta can now be reflected into your SCIM application. Okta will do the following to make the Group changes effective:</p>
+<ul>
+  <li>Make a GET request against <code class="highlighter-rouge">/Groups/{id}</code> on your SCIM API for the
+group to update.</li>
+  <li>Take the resource returned from your SCIM API and update only the
+attributes that need to be updated.</li>
+  <li>Make a PUT request against <code class="highlighter-rouge">/Groups/{id}</code> in your SCIM API with
+the updated resource as the payload.</li>
+</ul>
+
+<h5 id="delete-group-delete-groupsid">Delete Group: DELETE /Groups/{id}</h5>
+
+<p>With Group Push Beta, Okta can delete the Group in your SCIM enabled application. For more details on deleting resources, see section <a href="https://tools.ietf.org/html/rfc7644#section-3.6">3.6</a> of the <a href="https://tools.ietf.org/html/rfc7644">SCIM 2.0 Protocol Specification</a>.</p>
+
 <h3 id="scim-features-not-implemented-by-okta">SCIM Features Not Implemented by Okta</h3>
 
 <p>The following features are currently not supported by Okta:</p>
@@ -1042,27 +1066,6 @@ covered in
 <a href="https://tools.ietf.org/html/rfc7644#section-3.11">section 3.11</a> of the <a href="https://tools.ietf.org/html/rfc7644">SCIM 2.0 Protocol Specification</a>.</p>
 
 <p>Okta does not currently make SCIM requests with the <code class="highlighter-rouge">/Me</code> URI alias.</p>
-
-<h4 id="groups-api-endpoint">/Groups API endpoint</h4>
-
-<p>Okta currently does not support using the <code class="highlighter-rouge">/Groups</code> endpoint of a SCIM
-API, except for <a href="#get-groups-api-endpoint"><code class="highlighter-rouge">GET /Groups</code></a>. When support is added for the <code class="highlighter-rouge">/Groups</code> endpoint, Okta plans
-to use the following HTTP requests against the <code class="highlighter-rouge">/Groups</code> endpoint:</p>
-
-<ul>
-  <li>
-    <p>Read list of Groups: GET /Groups</p>
-  </li>
-  <li>
-    <p>Create Group: POST /Groups</p>
-  </li>
-  <li>
-    <p>Read Group detail: GET /Groups/{id}</p>
-  </li>
-  <li>
-    <p>Delete Group: DELETE /Groups/{id}</p>
-  </li>
-</ul>
 
 <h4 id="schemas-api-endpoint">/Schemas API endpoint</h4>
 

@@ -738,6 +738,30 @@ Example:
 }
 ~~~
 
+##### Create Group: POST /Groups
+
+With Group Push Beta, Okta now supports creation of a Group along with its user memberships in the downstream SCIM enabled application if your SCIM 2.0 API supports it. The caveat is that the users must already be provisioned in your SCIM enabled application.
+
+##### Read Group Details: GET /Groups/{id}
+
+With Group Push Beta, Okta now supports reading the Group's details by group id along with the membership details. If a Group is not found, your SCIM application may return a HTTP status 404("not found").For more details on the `/Groups/{id}` SCIM endpoint, see [section 3.4.1](https://tools.ietf.org/html/rfc7644#section-3.4.1) of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
+
+
+##### Update Group Details: PUT /Groups/{id}
+
+With Group Push Beta, any updates to the Group profile and memberships in Okta can now be reflected into your SCIM application. Okta will do the following to make the Group changes effective:
+-   Make a GET request against `/Groups/{id}` on your SCIM API for the
+    group to update.
+-   Take the resource returned from your SCIM API and update only the
+    attributes that need to be updated.
+-   Make a PUT request against `/Groups/{id}` in your SCIM API with
+    the updated resource as the payload.
+
+
+##### Delete Group: DELETE /Groups/{id}
+
+With Group Push Beta, Okta can delete the Group in your SCIM enabled application. For more details on deleting resources, see section [3.6](https://tools.ietf.org/html/rfc7644#section-3.6) of the [SCIM 2.0 Protocol Specification](https://tools.ietf.org/html/rfc7644).
+
 ### SCIM Features Not Implemented by Okta
 
 The following features are currently not supported by Okta:
@@ -780,19 +804,6 @@ covered in
 
 Okta does not currently make SCIM requests with the `/Me` URI alias.
 
-#### /Groups API endpoint
-
-Okta currently does not support using the `/Groups` endpoint of a SCIM
-API, except for [`GET /Groups`](#get-groups-api-endpoint). When support is added for the `/Groups` endpoint, Okta plans
-to use the following HTTP requests against the `/Groups` endpoint:
-
--   Read list of Groups: GET /Groups
-
--   Create Group: POST /Groups
-
--   Read Group detail: GET /Groups/{id}
-
--   Delete Group: DELETE /Groups/{id}
 
 #### /Schemas API endpoint
 
